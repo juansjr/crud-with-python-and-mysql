@@ -37,6 +37,20 @@ class Conexion:
             return df
         else:
             print(resultset)
+            return resultset
+
+    def validarCredenciales(self,usuario, password):
+        query = db.select([self.usuarios]).where(
+            self.usuarios.columns.nombre_usuario==usuario,
+            self.usuarios.columns.contraseña_usuario == password)
+        resultado = self.connection.execute(query)
+        Resultset = resultado.fetchall()
+        return Resultset
+        
+                
+                
+
+
 
     
 

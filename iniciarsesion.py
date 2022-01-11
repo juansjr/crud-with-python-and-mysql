@@ -1,5 +1,7 @@
 from tkinter import *
 from functools import *
+from typing import Type
+from conexion import Conexion
 
 
 
@@ -9,10 +11,18 @@ class iniciarSesion(Frame):
         self.master = master
         self.pack()
         self.iniciarComponentes()
+        self.bd = Conexion()
 
-    def validarSesion(self, password, usuario):
-        print(f"Usuario ingresado: {usuario}")
-        print(f"Contraseña ingresada: {password}")
+    def validarSesion(self, usuario, password):
+        nombre_usuario = usuario.get()
+        contraseña_usuario = password.get()
+        print(f"Usuario ingresado: {nombre_usuario}")
+        print(f"Contraseña ingresada: {contraseña_usuario}")
+        resultado = self.bd.validarCredenciales(nombre_usuario, contraseña_usuario)
+        if(len(resultado)>0):
+            print("Validado.")
+       
+
         
     def iniciarComponentes(self):
         usuariosLabel = Label(self,text="Usuario").grid(row=0, column=0)
@@ -29,6 +39,7 @@ class iniciarSesion(Frame):
          command=validarSesion,
           bg="white",
           fg = "black").grid(row = 4, column=0)
+          
 
 ventana = Tk()
 ventana.geometry("400x300")
